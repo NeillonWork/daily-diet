@@ -24,7 +24,7 @@ export function InfoButtons({
   return (
     <Container type={type} {...rest}>
       <FormIcon>
-        <TopIcon type="SUCCESS"/>
+        <TopIcon type={type}/>
       </FormIcon>
       <Form>
         <Title>{title}</Title>

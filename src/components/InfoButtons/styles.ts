@@ -16,7 +16,7 @@ export const Container = styled(TouchableOpacity)<Props>`
   border-radius: 6px;
 
   background-color: ${({ theme, type }) =>
-    type === "SUCCESS" ? theme.COLORS.GREEN_MID : theme.COLORS.RED_DARK};
+    type === "SUCCESS" ? theme.COLORS.GREEN_MID : theme.COLORS.RED_LIGHT};
 `;
 
 export const FormIcon = styled.View`
@@ -25,10 +25,10 @@ export const FormIcon = styled.View`
   align-items: flex-end;
 `;
 
-export const TopIcon = styled(ArrowUpRight).attrs(({ theme, type }) => ({
+export const TopIcon = styled(ArrowUpRight).attrs<Props>(({ theme, type }) => ({
   size: 24,
   color: type === "SUCCESS" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
-}))<Props>``;
+}))``;
 
 export const Form = styled.View`
   width: 100%;

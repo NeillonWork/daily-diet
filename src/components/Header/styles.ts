@@ -8,7 +8,6 @@ export const Container = styled(SafeAreaView)`
   justify-content: space-between;
   align-items: center;
   margin-top: 60px;
-  margin-bottom: 20px;
 `;
 export const Logo = styled.Image`
   width: 82px;
