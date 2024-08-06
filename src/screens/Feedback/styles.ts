@@ -1,4 +1,10 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
+
+export type TextStyleProps = "SUCCESS" | "FAILURE";
+
+type Props = {
+  type: TextStyleProps;
+};
 
 export const Container = styled.View`
   flex: 1;
@@ -10,12 +16,17 @@ export const Container = styled.View`
   align-items: center;
 `;
 export const Section = styled.View``;
-export const Title = styled.Text`
+
+export const Title = styled.Text<Props>`
   text-align: center;
   color: ${({ theme }) => theme.COLORS.GREEN_DARK};
   font-size: ${({ theme }) => theme.FONT_SIZE.XL}px;
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+
+  color: ${({ theme, type }) =>
+    type === "SUCCESS" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
 `;
+
 export const SubTitle = styled.Text`
   text-align: center;
   color: ${({ theme }) => theme.COLORS.GRAY_100};

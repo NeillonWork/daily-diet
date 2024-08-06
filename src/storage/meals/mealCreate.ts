@@ -15,7 +15,7 @@ export async function mealCreate(newMeal: string) {
 
     const updatedMeals = [...storedMeals, newMeal];
 
-   //return  await AsyncStorage.clear()
+   // return  await AsyncStorage.clear()
     await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(updatedMeals));
   } catch (error) {
     throw error;

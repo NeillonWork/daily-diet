@@ -1,3 +1,12 @@
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+
+import { mealCreate } from "@storage/meals/mealCreate";
+
+import { Input } from "@components/Input";
+import { TextArea } from "@components/TextArea";
+import { Filter } from "@components/Filter";
+import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import {
   Container,
@@ -9,24 +18,19 @@ import {
   ViewRow,
   ButtonContainer,
 } from "./styles";
-import { Input } from "@components/Input";
-import { TextArea } from "@components/TextArea";
-import { Filter } from "@components/Filter";
-import { Button } from "@components/Button";
-import { useState } from "react";
-import { mealCreate } from "@storage/meals/mealCreate";
-import { useNavigation } from "@react-navigation/native";
+
 
 export function CreateMeal() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [hours, sethours] = useState("");
-  const [dietSuccess, setDietSuccess] = useState(false);
+  const [dietSuccess, setDietSuccess] = useState(true);
 
   const navigate = useNavigation();
 
   async function handleNewMeal() {
+
     const newMeal = {
       name,
       description,
@@ -37,7 +41,7 @@ export function CreateMeal() {
 
     await mealCreate(newMeal);
 
-    navigate.navigate("feedback");
+    navigate.navigate("feedback", { dietSuccess });
   }
 
   return (
@@ -70,6 +74,7 @@ export function CreateMeal() {
           <FormRow>
             <ViewRow>
               <Filter
+               type={"YES"}
                 isActive={dietSuccess}
                 title="Sim"
                 onPress={() => setDietSuccess(true)}
@@ -77,9 +82,10 @@ export function CreateMeal() {
             </ViewRow>
             <ViewRow>
               <Filter
+               type={"NO"}
                 isActive={!dietSuccess}
                 title="Não"
-                onPress={() => setDietSuccess(false)}
+                onPress={() => setDietSuccess(false) }
               />
             </ViewRow>
           </FormRow>

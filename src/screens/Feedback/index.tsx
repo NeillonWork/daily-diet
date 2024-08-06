@@ -1,3 +1,8 @@
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+import logoSuccess from "@assets/success.png";
+import logoUnsuccess from "@assets/unsuccess.png";
+
 import { Button } from "@components/Button";
 import {
   Container,
@@ -8,21 +13,39 @@ import {
   Title,
 } from "./styles";
 
-import logoSuccess from "@assets/success.png";
-import logoUnsuccess from "@assets/unsuccess.png";
-import { useNavigation } from "@react-navigation/native";
+type RouteParams = {
+  dietSuccess: boolean;
+};
 
 export function Feedback() {
+  const route = useRoute();
+  const { dietSuccess } = route.params as RouteParams;
+
   const navigator = useNavigation();
 
   return (
     <Container>
       <Section>
-        <Title>Continue assim!</Title>
-        <SubTitle>Você continua dentro da dieta. Muito bem!</SubTitle>
+        {dietSuccess === true ? (
+          <Title type="SUCCESS">Continue assim!</Title>
+        ) : (
+          <Title type="FAILURE">Que pena!</Title>
+        )}
+        {dietSuccess === true ? (
+          <SubTitle>Você continua dentro da dieta. Muito bem!</SubTitle>
+        ) : (
+          <SubTitle>
+            Você saiu da dieta dessa vez, mas continue se esforçando e não
+            desista!
+          </SubTitle>
+        )}
       </Section>
 
-      <FeedbackImg source={logoSuccess} />
+      {dietSuccess === true ? (
+        <FeedbackImg source={logoSuccess} />
+      ) : (
+        <FeedbackImg source={logoUnsuccess} />
+      )}
 
       <SectionButton>
         <Button
