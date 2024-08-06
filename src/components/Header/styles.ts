@@ -7,7 +7,7 @@ export const Container = styled(SafeAreaView)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 24px;
 `;
 export const Logo = styled.Image`
   width: 82px;
@@ -20,10 +20,19 @@ export const Avatar = styled.Image`
 `;
 
 export const BackButton = styled.TouchableOpacity`
-  flex: 1;
 `;
 
 export const BackIcon = styled(ArrowLeft).attrs(({ theme }) => ({
   size: 24,
   color: theme.COLORS.GREEN_DARK,
 }))``;
+
+export const PageHeader = styled.View`
+  flex: 1;
+`;
+
+export const PageTitle = styled.Text`
+  text-align: center;
+  font-size: ${({theme}) => theme.FONT_SIZE.LG}px;
+  color: ${({theme}) => theme.COLORS.GRAY_100};
+`;

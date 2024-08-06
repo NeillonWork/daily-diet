@@ -7,7 +7,7 @@ export type ButtonTypeIconProps = "ADD" | "DELETE" | "EDIT";
 type Props = TouchableOpacityProps & {
   title: string;
   type?: ButtonTypeStyleProps;
-  typeIcon: ButtonTypeIconProps;
+  typeIcon?: ButtonTypeIconProps;
 };
 
 const iconMap = {

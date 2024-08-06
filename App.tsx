@@ -4,10 +4,10 @@ import {
   NunitoSans_400Regular,
   NunitoSans_700Bold,
 } from "@expo-google-fonts/nunito-sans";
-//import { Home } from "@screens/Home";
-import { Statistics } from "@screens/Statistics";
+
 import theme from "@theme/index";
 import { StatusBar } from "react-native";
+import { Routes } from "src/routes";
 
 import { ThemeProvider } from "styled-components/native";
 
@@ -23,7 +23,7 @@ export default function App() {
         translucent
       />
 
-      {fontLoaded ? <Statistics /> : <Loading />}
+      {fontLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 }

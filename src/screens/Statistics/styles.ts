@@ -43,7 +43,9 @@ export const GeneralStatistics = styled.View`
   padding: 24px;
   align-items: center;
   position: absolute;
+
   top: 180px;
+  bottom: 0;
 
   border-radius: 20px 20px 0 0;
 
@@ -64,7 +66,7 @@ export const GeneralStatisticsTitle = styled.Text`
 export const Form = styled.View`
   width: 100%;
   flex-direction: row;
-  justify-content: space-between; /* Garante que os itens sejam espaçados uniformemente */
-  flex-wrap: wrap; /* Permite quebra de linha se os itens não couberem */
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
