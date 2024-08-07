@@ -1,8 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import styled, { css } from "styled-components/native";
 
-import { Circle } from "phosphor-react-native";
-
 type ButtonStyleProps = "YES" | "NO";
 
 export type FilterStyleProps = {
