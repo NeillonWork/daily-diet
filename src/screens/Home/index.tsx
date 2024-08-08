@@ -1,4 +1,14 @@
+import { SectionList } from "react-native";
+import { useCallback, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+
+import { Header } from "@components/Header";
+import { Button } from "@components/Button";
+import { MealCardList } from "@components/MealCardList";
 import { InfoButtons } from "@components/InfoButtons";
+import { mealGetAll } from "@storage/meals/mealGetAll";
+import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
+
 import {
   Container,
   Form,
@@ -6,34 +16,34 @@ import {
   Title,
   ViewHeaderList,
 } from "./styles";
-import { Header } from "@components/Header";
-import { Button } from "@components/Button";
-import { useCallback, useState } from "react";
-import { SectionList } from "react-native";
-import { MealCardList } from "@components/MealCardList";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { mealGetAll } from "@storage/meals/mealGetAll";
+import { calculatePercentage } from "src/utils/percentagem";
 
-interface Meal {
-  name: string;
-  description: string;
-  date: string;
-  hours: string;
-  dietSuccess: boolean;
-}
-
-interface MealSection {
+type MealSection = {
   title: string;
-  data: string[];
-}
+  data: MealStorageDTO[];
+};
 
 export function Home() {
   const navigation = useNavigation();
   const [mealList, setMealList] = useState<MealSection[]>([]);
+  const [percent, setPercent] = useState("0");
 
+  function handleEditMeals(meal: string) {
+    navigation.navigate("editmeals");
+  }
+
+  //Calc porcentagem
+  async function Calculate(){
+    const result = await mealGetAll();
+    const newPercentage = calculatePercentage(result)
+
+    setPercent(newPercentage)
+  }
+
+  //recupera dados
   async function fetchMeals() {
     try {
-      const storedMeals: Meal[] = await mealGetAll();
+      const storedMeals: MealStorageDTO[] = await mealGetAll();
 
       const formattedMeals: MealSection[] = storedMeals.reduce(
         (acc: MealSection[], meal) => {
@@ -42,26 +52,29 @@ export function Home() {
           );
 
           if (existingSection) {
-            existingSection.data.push(`${meal.hours} | ${meal.name}`);
+            existingSection.data.push(meal);
           } else {
             acc.push({
               title: meal.date,
-              data: [`${meal.hours} | ${meal.name}`],
+              data: [meal],
             });
           }
-          return acc;
+          return acc
         },
         []
       );
-
+     
       setMealList(formattedMeals);
     } catch (error) {
       console.error("Erro ao recuperar refeições:", error);
     }
+   
   }
+
   useFocusEffect(
     useCallback(() => {
       fetchMeals();
+      Calculate();
     }, [])
   );
 
@@ -69,9 +82,11 @@ export function Home() {
     <Container>
       <Header />
       <InfoButtons
-        title="90,86%"
+
+    title={`${percent}%`}
+       
         subtitle="das refeições dentro da dieta"
-        onPress={() => navigation.navigate("statistics")}
+        onPress={() => navigation.navigate("statistics", {percent})}
       />
 
       <Form>
@@ -85,8 +100,20 @@ export function Home() {
 
       <SectionList
         sections={mealList}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => <MealCardList desc={item} />}
+        keyExtractor={(item) => item.name}
+        renderItem={({ item }) => (
+          <MealCardList
+            hours={item.hours}
+            name={item.name}
+            dietSuccess={item.dietSuccess}
+            // dietSuccess={item.dietSuccess}
+            //  description={item.description}
+            // date={item.date}
+            //  dietSuccess={item.dietSuccess}
+
+            onPress={() => handleEditMeals(item.name)}
+          />
+        )}
         renderSectionHeader={({ section: { title } }) => (
           <ViewHeaderList>
             <TextHeaderList>{title}</TextHeaderList>

@@ -2,7 +2,7 @@ const theme = {
   COLORS: {
     //Produtos
     RED_DARK: "#BF3B44",
-    RED_MID: "##F3BABD",
+    RED_MID: "#F3BABD",
     RED_LIGHT: "#F4E6E7",
 
     GREEN_DARK: "#639339",

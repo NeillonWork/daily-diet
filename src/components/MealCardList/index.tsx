@@ -1,14 +1,49 @@
-import { Container, DescMealTitle, Form } from "./styles";
+import { Text, TouchableOpacityProps } from "react-native";
+import {
+  Container,
+  DescMealData,
+  DescMealName,
+  Form,
+  PipeSpace,
+  CircleIcon,
+  CircleIconStyledProps,
+} from "./styles";
 
-type Props = {
-  desc: string;
+type Props = TouchableOpacityProps & {
+  date?: string;
+  desc?: string;
+  name?: string;
+  description?: string;
+  hours?: string;
+  dietSuccess: boolean;
+  type?: CircleIconStyledProps;
 };
 
-export function MealCardList({ desc }: Props) {
+export function MealCardList({
+  desc,
+  date,
+  name,
+  description,
+  hours,
+  dietSuccess,
+  type,
+  ...rest
+}: Props) {
   return (
-    <Container>
+    <Container {...rest}>
       <Form>
-        <DescMealTitle>{desc}</DescMealTitle>
+        <DescMealData>{hours}</DescMealData>
+        <PipeSpace />
+        <DescMealName>{name}</DescMealName>
+
+        <Text>
+          {" "}
+          {dietSuccess ? (
+            <CircleIcon type="SUCCESS" />
+          ) : (
+            <CircleIcon type="DANGER" />
+          )}
+        </Text>
       </Form>
     </Container>
   );
